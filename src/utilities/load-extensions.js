@@ -1,0 +1,31 @@
+class extensions {
+
+    loadExtension = () => {
+        return new Promise((resolve) => {
+            Object.assign(Array.prototype, {
+                countWhen(predicate){
+                    return this.filter(predicate).length
+                }
+            })
+
+            Object.assign(Array.prototype, {
+                random(){
+                    const random = Math.floor(Math.random() * this.length)
+                    return this[random]
+                }
+            })
+
+            Object.assign(String.prototype, {
+                toBoolean() {
+                    if(this.toLowerCase() == "yes" || this.toLowerCase() == "on" || this == "1") return true
+                    else if(this.toLowerCase() == "no" || this.toLowerCase() == "off" || this == "0") return false
+                    return null
+                }
+            })
+
+            resolve()
+        })
+    }
+}
+
+export default new extensions()
