@@ -1,9 +1,15 @@
 {
+	"root": true,
 	"env": {
 		"browser": true,
 		"es2021": true
 	},
-	"extends": ["plugin:react/recommended", "airbnb", "prettier"],
+	"extends": [
+		"plugin:react/recommended",
+		"airbnb",
+		"prettier",
+		"plugin:import/recommended"
+	],
 	"overrides": [],
 	"parserOptions": {
 		"ecmaFeatures": {
@@ -13,6 +19,17 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"plugins": ["react"],
-	"rules": {}
+	"settings": {
+		"import/extensions": [".js", ".jsx"]
+	},
+	"plugins": ["react", "import"],
+	"rules": {
+		"import/extensions": ["error", "always", { "ignorePackages": true }],
+		"class-methods-use-this": ["error", { "enforceForClassFields": false }],
+		"semi": ["error", "never"],
+		"no-console": "off",
+		"strict": ["error", "function"],
+		"no-unused-vars": "warn",
+		"no-alert": "warn"
+	}
 }
