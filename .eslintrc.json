@@ -1,0 +1,35 @@
+{
+	"root": true,
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		"plugin:react/recommended",
+		"airbnb",
+		"prettier",
+		"plugin:import/recommended"
+	],
+	"overrides": [],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true,
+			"js": true
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"settings": {
+		"import/extensions": [".js", ".jsx"]
+	},
+	"plugins": ["react", "import"],
+	"rules": {
+		"import/extensions": ["error", "always", { "ignorePackages": true }],
+		"class-methods-use-this": ["error", { "enforceForClassFields": false }],
+		"semi": ["error", "never"],
+		"no-console": "off",
+		"strict": ["error", "function"],
+		"no-unused-vars": "warn",
+		"no-alert": "warn"
+	}
+}
