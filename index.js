@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import http from 'http'
 import loadExtensions from './src/utilities/load-extensions.js'
 import database from './src/db/config.js'
+import router from './src/routes/index.js'
 
 class App {
 	constructor() {
@@ -31,12 +32,7 @@ class App {
 			app.use(express.json({ limit: '10mb' }))
 			app.use(express.urlencoded({ extended: true }))
 			app.use(bodyParser.urlencoded({ extended: false }))
-			app.use('/api/v1', async (req, res) =>
-				res.json({
-					type: 'success',
-					message: 'server started.',
-				})
-			)
+			app.use('/api/v1', router)
 			resolve(app)
 		})
 

@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 const options = {
 	useUnifiedTopology: true,
-	serverSelectionTimeoutMS: 10 * 1000, // 1s timeout
+	serverSelectionTimeoutMS: 10 * 1000 // 1s timeout
 }
 
 class Database {

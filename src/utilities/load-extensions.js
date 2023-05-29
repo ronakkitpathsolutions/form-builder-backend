@@ -4,14 +4,14 @@ class Extensions {
 			Object.assign(Array.prototype, {
 				countWhen(predicate) {
 					return this.filter(predicate).length
-				},
+				}
 			})
 
 			Object.assign(Array.prototype, {
 				random() {
 					const random = Math.floor(Math.random() * this.length)
 					return this[random]
-				},
+				}
 			})
 
 			Object.assign(String.prototype, {
@@ -31,7 +31,7 @@ class Extensions {
 					)
 						return false
 					return null
-				},
+				}
 			})
 
 			resolve()
