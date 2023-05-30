@@ -19,6 +19,26 @@ class JWT {
 		})
 		return token
 	}
+
+	tokenExpired = async (token) => {
+		try {
+			const isExpired = jwt.verify(token, process.env.SECRET_KEY)
+			if (!isExpired) return true
+			return isExpired?.exp <= Math.floor(Date.now() / 1000)
+		} catch (error) {
+			return true
+		}
+	}
+
+	verifyUserToken = async (token) => {
+		const isVerified = jwt.verify(token, process.env.SECRET_KEY)
+		return isVerified
+	}
+
+	handleAdminAccess = async (token) => {
+		const isAdminAuthorized = await this.verifyUserToken(token)
+		return isAdminAuthorized?.role === 'admin'
+	}
 }
 
 export default new JWT()
