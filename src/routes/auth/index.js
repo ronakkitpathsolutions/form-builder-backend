@@ -1,16 +1,20 @@
 import { Router } from 'express'
 import Middleware from '../../middleware/index.js'
-import jwt from '../../utilities/jwt.js'
+import AuthController from '../../controllers/user/index.js'
 
-const authrouter = Router()
+const authRouter = Router()
 
-authrouter.get(
+authRouter.get(
 	'/check/:_id',
 	[Middleware.authentication, Middleware.isValidObjectId],
 	(_, res) => res.json({ type: 'check' })
 )
-authrouter.get('/token', async (_, res) =>
-	res.json({ type: 'ok', token: await jwt.generateNewToken({ name: 'Ronak' }) })
-)
 
-export default authrouter
+authRouter.post(
+	'/user/create',
+	[Middleware.authentication, Middleware.isAdmin],
+	AuthController.createUser
+)
+authRouter.post('/user/login', AuthController.loginUser)
+
+export default authRouter

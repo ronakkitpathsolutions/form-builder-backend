@@ -46,6 +46,10 @@
 		"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0 }],
 		"comma-dangle": ["error", "never"],
 		"comma-spacing": "warn",
-		"import/no-extraneous-dependencies": "off"
+		"import/no-extraneous-dependencies": "off",
+		"camelcase": "off",
+		"no-extra-boolean-cast": "off",
+		"consistent-return": "off",
+		"no-underscore-dangle": "off"
 	}
 }

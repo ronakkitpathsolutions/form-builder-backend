@@ -15,32 +15,28 @@ class MiddleWare {
 		else
 			res
 				.status(statusCode.unauthorized)
-				.json(response({ type: types.error, message: 'Invalid objectId' }))
+				.json(response({ type: types.error, message: 'Invalid objectId.' }))
 	}
 
 	authentication = async (req, res, next) => {
 		try {
 			const { token } = req.headers
-			if (!token) {
+			if (!token)
 				res
 					.status(statusCode.unauthorized)
 					.json(response({ type: types.error, message: 'Provide token.' }))
-			} else if (await JWT.tokenExpired(token)) {
+			else if (await JWT.tokenExpired(token))
 				res
 					.status(statusCode.unauthorized)
 					.json(response({ type: types.error, message: 'Invalid token.' }))
-			} else {
-				next()
-			}
+			else next()
 		} catch (error) {
-			res
-				.status(statusCode.serverError)
-				.json(
-					response({
-						type: types.error,
-						message: error.message || 'Somthing went wrong.'
-					})
-				)
+			res.status(statusCode.serverError).json(
+				response({
+					type: types.error,
+					message: error.message || 'Somthing went wrong.'
+				})
+			)
 		}
 	}
 
@@ -58,14 +54,12 @@ class MiddleWare {
 				)
 			else next()
 		} catch (error) {
-			res
-				.status(statusCode.serverError)
-				.json(
-					response({
-						type: types.error,
-						message: error.message || 'Somthing went wrong.'
-					})
-				)
+			res.status(statusCode.serverError).json(
+				response({
+					type: types.error,
+					message: error.message || 'Somthing went wrong.'
+				})
+			)
 		}
 	}
 }
