@@ -8,7 +8,7 @@ class Bcrypt {
 
 	hashPassword = async (value) => {
 		const hashedPassword = await new Promise((resolve, reject) => {
-			bcrypt.hash(value, process.env.SALT_ROUND, (err, hash) => {
+			bcrypt.hash(value, Number(process.env.SALT_ROUND), (err, hash) => {
 				if (err) reject(err)
 				resolve(hash)
 			})

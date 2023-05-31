@@ -37,7 +37,7 @@ class JWT {
 
 	handleAdminAccess = async (token) => {
 		const isAdminAuthorized = await this.verifyUserToken(token)
-		return isAdminAuthorized?.role === 'admin'
+		return String(isAdminAuthorized?.role).toLowerCase() === 'admin'
 	}
 }
 
