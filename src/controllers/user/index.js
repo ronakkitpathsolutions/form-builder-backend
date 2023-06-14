@@ -91,6 +91,98 @@ class AuthController {
 						message: 'All fields are required.'
 					})
 				)
+
+			const findUser = await User.findOne({ email })
+
+			if (!findUser)
+				return res.status(statusCode.badRequest).json(
+					response({
+						type: types.error,
+						message: 'User not found this email address.'
+					})
+				)
+
+			const isAuthenticated = await Bcrypt.comparePassword(
+				password,
+				findUser?.password
+			)
+
+			if (!isAuthenticated)
+				return res.status(statusCode.unauthorized).json(
+					response({
+						type: types.error,
+						message: 'Invalid username or password.'
+					})
+				)
+
+			return res.status(statusCode.success).json(
+				response({
+					type: types.success,
+					message: 'User login successfully.',
+					token: await JWT.generateNewToken({
+						user_id: findUser?._id,
+						email: findUser?.email,
+						role: findUser?.role,
+						username: findUser?.username,
+						contact: findUser?.contact
+					})
+				})
+			)
+		} catch (error) {
+			serverError(error, res)
+		}
+	}
+
+	getUserById = async (req, res) => {
+		try {
+			const { _id } = req.params
+			const data = await User.findById(_id).select([
+				'username',
+				'email',
+				'role',
+				'contact',
+				'created_At'
+			])
+			if (!data)
+				return res.status(statusCode.notFound).json(
+					response({
+						type: types.error,
+						message: 'User not found.'
+					})
+				)
+			res.status(statusCode.success).json(
+				response({
+					type: types.success,
+					data
+				})
+			)
+		} catch (error) {
+			serverError(error, res)
+		}
+	}
+
+	getAllUsers = async (req, res) => {
+		try {
+			const data = await User.find({}).select([
+				'username',
+				'email',
+				'role',
+				'contact',
+				'created_At'
+			])
+			if (!data)
+				return res.status(statusCode.notFound).json(
+					response({
+						type: types.error,
+						message: 'Users not found.'
+					})
+				)
+			res.status(statusCode.success).json(
+				response({
+					type: types.success,
+					data
+				})
+			)
 		} catch (error) {
 			serverError(error, res)
 		}
