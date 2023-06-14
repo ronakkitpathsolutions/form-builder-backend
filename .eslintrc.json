@@ -50,6 +50,7 @@
 		"camelcase": "off",
 		"no-extra-boolean-cast": "off",
 		"consistent-return": "off",
-		"no-underscore-dangle": "off"
+		"no-underscore-dangle": "off",
+		"no-bitwise": "off"
 	}
 }
