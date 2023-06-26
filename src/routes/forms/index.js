@@ -4,6 +4,18 @@ import FormController from '../../controllers/form/index.js'
 
 const formRouter = Router()
 
+// admin and user both are access this route
+
+formRouter.post(
+	'/user/:_id/forms/create',
+	[
+		Middleware.authentication,
+		Middleware.getAccessByUserId,
+		Middleware.isValidObjectId
+	],
+	FormController.createForm
+)
+
 // admin purpose
 formRouter.get(
 	'/admin/forms',
@@ -17,16 +29,19 @@ formRouter.get(
 	FormController.getFormById
 )
 
-// for user
-formRouter.post(
-	'/user/:_id/forms/create',
-	[
-		Middleware.authentication,
-		Middleware.getAccessByUserId,
-		Middleware.isValidObjectId
-	],
-	FormController.createForm
+formRouter.delete(
+	'/admin/forms/delete/:form_id',
+	[Middleware.authentication, Middleware.isAdmin, Middleware.isValidObjectId],
+	FormController.deleteForm
 )
+
+formRouter.patch(
+	'/admin/forms/update/:form_id',
+	[Middleware.authentication, Middleware.isAdmin, Middleware.isValidObjectId],
+	FormController.updateForm
+)
+
+// for user
 
 formRouter.get(
 	'/user/:_id/forms',
@@ -46,6 +61,26 @@ formRouter.get(
 		Middleware.isValidObjectId
 	],
 	FormController.getFormById
+)
+
+formRouter.patch(
+	'/user/:_id/forms/update/:form_id',
+	[
+		Middleware.authentication,
+		Middleware.getAccessByUserId,
+		Middleware.isValidObjectId
+	],
+	FormController.updateForm
+)
+
+formRouter.delete(
+	'/user/:_id/forms/delete/:form_id',
+	[
+		Middleware.authentication,
+		Middleware.getAccessByUserId,
+		Middleware.isValidObjectId
+	],
+	FormController.deleteForm
 )
 
 export default formRouter
