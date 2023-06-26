@@ -22,7 +22,8 @@ const fieldSchema = new Schema({
 	},
 	field_description: {
 		type: String,
-		required: true,
+		required: false,
+		default: null,
 		trim: true
 	},
 	field_type: {

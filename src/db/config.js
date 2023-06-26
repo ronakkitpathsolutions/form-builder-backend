@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 
 const options = {
+	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	serverSelectionTimeoutMS: 10 * 1000 // 1s timeout
 }

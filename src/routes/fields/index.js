@@ -10,4 +10,20 @@ fieldsRouter.post(
 	FieldController.createInputField
 )
 
+fieldsRouter.get('/field', FieldController.getAllFields)
+
+fieldsRouter.get('/field/:_id', FieldController.getField)
+
+fieldsRouter.patch(
+	'/field/update/:_id',
+	[Middleware.authentication, Middleware.isValidObjectId, Middleware.isAdmin],
+	FieldController.updateField
+)
+
+fieldsRouter.delete(
+	'/field/delete/:_id',
+	[Middleware.authentication, Middleware.isValidObjectId, Middleware.isAdmin],
+	FieldController.deleteField
+)
+
 export default fieldsRouter
