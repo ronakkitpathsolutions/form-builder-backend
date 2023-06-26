@@ -118,56 +118,66 @@ class FormController {
 	}
 
 	deleteForm = async (req, res) => {
-		const { form_id } = req.params
-		const data = await Form.findByIdAndDelete(form_id)
-		if (!data)
-			return res.status(statusCode.notFound).json(
+		try {
+			const { form_id } = req.params
+			const data = await Form.findByIdAndDelete(form_id)
+			if (!data)
+				return res.status(statusCode.notFound).json(
+					response({
+						type: types.error,
+						message: 'Not found.'
+					})
+				)
+			res.status(statusCode.success).json(
 				response({
-					type: types.error,
-					message: 'Not found.'
+					type: types.success,
+					message: 'Deleted successfully.'
 				})
 			)
-		res.status(statusCode.success).json(
-			response({
-				type: types.success,
-				message: 'Deleted successfully.'
-			})
-		)
+		} catch (error) {
+			serverError(error, res)
+		}
 	}
 
 	updateForm = async (req, res) => {
-		const { params, body } = req
-		const isAllFieldRequired = Helper.allFieldsAreRequired(Object.values(body))
-
-		if (isAllFieldRequired)
-			return res.status(statusCode.badRequest).json(
-				response({
-					type: types.error,
-					message: 'All fields are required.'
-				})
+		try {
+			const { params, body } = req
+			const isAllFieldRequired = Helper.allFieldsAreRequired(
+				Object.values(body)
 			)
 
-		await Form.findByIdAndUpdate(
-			params?.form_id,
-			Helper.removeField(['form_code', 'user_id'], { ...body })
-		)
-		const data = await Form.findById(params?.form_id)
+			if (isAllFieldRequired)
+				return res.status(statusCode.badRequest).json(
+					response({
+						type: types.error,
+						message: 'All fields are required.'
+					})
+				)
 
-		if (!data)
-			return res.status(statusCode.notFound).json(
+			await Form.findByIdAndUpdate(
+				params?.form_id,
+				Helper.removeField(['form_code', 'user_id'], { ...body })
+			)
+			const data = await Form.findById(params?.form_id)
+
+			if (!data)
+				return res.status(statusCode.notFound).json(
+					response({
+						type: types.error,
+						message: 'Not found.'
+					})
+				)
+
+			return res.status(statusCode.success).json(
 				response({
-					type: types.error,
-					message: 'Not found.'
+					type: types.success,
+					message: 'Form updated successfully.',
+					data
 				})
 			)
-
-		return res.status(statusCode.success).json(
-			response({
-				type: types.success,
-				message: 'Form updated successfully.',
-				data
-			})
-		)
+		} catch (error) {
+			serverError(error, res)
+		}
 	}
 }
 
