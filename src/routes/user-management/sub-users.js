@@ -10,4 +10,27 @@ subUserRoute.post(
 	SubUserController.createSubUser
 )
 
+subUserRoute.get(
+	'/admin/sub-users',
+	[Middleware.authentication, Middleware.isAdmin],
+	SubUserController.getAllSubUsers
+)
+
+subUserRoute.get(
+	'/admin/sub-users/:_id',
+	[Middleware.authentication, Middleware.bothAreAccessible],
+	SubUserController.getSubUser
+)
+
+subUserRoute.patch(
+	'/admin/sub-users/update/:_id',
+	[Middleware.authentication, Middleware.isAdmin, Middleware.isValidObjectId],
+	SubUserController.updateUser
+)
+subUserRoute.delete(
+	'/admin/sub-users/delete/:_id',
+	[Middleware.authentication, Middleware.isAdmin, Middleware.isValidObjectId],
+	SubUserController.deleteUser
+)
+
 export default subUserRoute

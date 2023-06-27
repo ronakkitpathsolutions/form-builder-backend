@@ -16,6 +16,7 @@ class UserController {
 		try {
 			const { _id } = req.params
 			const data = await User.findById(_id).select([
+				'_id',
 				'username',
 				'email',
 				'role',
@@ -43,6 +44,7 @@ class UserController {
 	getAllUsers = async (req, res) => {
 		try {
 			const data = await User.find({}).select([
+				'_id',
 				'username',
 				'email',
 				'role',

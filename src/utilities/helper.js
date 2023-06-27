@@ -6,7 +6,8 @@ class Helper {
 		if (!data?.length) return true
 		const cloneData = [...data]
 		return cloneData?.some(
-			(fields) => fields === '' || String(fields).trim() === ''
+			(fields) =>
+				fields === undefined || fields === '' || String(fields).trim() === ''
 		)
 	}
 
