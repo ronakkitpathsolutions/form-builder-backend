@@ -77,6 +77,22 @@ class FormController {
 		try {
 			const { form_id } = req.params
 			const data = await Form.findById(form_id)
+			const result = await Form.aggregate([
+				{
+					$match: {
+						_id: Helper.ObjectId(form_id)
+					}
+				},
+				{
+					$lookup: {
+						from: 'attributes',
+						localField: 'form_code',
+						foreignField: 'form_code',
+						as: 'attributes'
+					}
+				}
+			])
+
 			if (!data)
 				return res.status(statusCode.notFound).json(
 					response({
@@ -87,7 +103,7 @@ class FormController {
 			res.status(statusCode.success).json(
 				response({
 					type: types.success,
-					data
+					data: result[0]
 				})
 			)
 		} catch (error) {

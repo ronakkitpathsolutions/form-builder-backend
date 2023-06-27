@@ -11,8 +11,8 @@ class MiddleWare {
 	}
 
 	isValidObjectId = (req, res, next) => {
-		const { _id, form_id } = req.params
-		if (Types.ObjectId.isValid(_id || form_id)) next()
+		const { _id, form_id, attr_id } = req.params
+		if (Types.ObjectId.isValid(_id || form_id || attr_id)) next()
 		else
 			res
 				.status(statusCode.unauthorized)

@@ -1,14 +1,13 @@
 import crypto from 'crypto'
+import mongoose from 'mongoose'
 
 class Helper {
 	allFieldsAreRequired = (data = []) => {
 		if (!data?.length) return true
 		const cloneData = [...data]
-		const validatorArray = []
-		cloneData?.forEach((value) => {
-			validatorArray?.push(!value)
-		})
-		return validatorArray?.some((fields) => !!fields)
+		return cloneData?.some(
+			(fields) => fields === '' || String(fields).trim() === ''
+		)
 	}
 
 	uniqueId = (size) => {
@@ -32,6 +31,8 @@ class Helper {
 		})
 		return filteredResponse
 	}
+
+	ObjectId = (id) => new mongoose.Types.ObjectId(id)
 }
 
 export default new Helper()
