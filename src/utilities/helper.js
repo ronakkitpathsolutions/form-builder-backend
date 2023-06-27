@@ -1,14 +1,13 @@
 import crypto from 'crypto'
+import mongoose from 'mongoose'
 
 class Helper {
-	allFieldsAreRequired = (data = [], isNested = false) => {
-		if (isNested) return null
+	allFieldsAreRequired = (data = []) => {
+		if (!data?.length) return true
 		const cloneData = [...data]
-		const validatorArray = []
-		cloneData?.forEach((value) => {
-			validatorArray?.push(!value)
-		})
-		return validatorArray?.some((fields) => !!fields)
+		return cloneData?.some(
+			(fields) => fields === '' || String(fields).trim() === ''
+		)
 	}
 
 	uniqueId = (size) => {
@@ -18,9 +17,22 @@ class Helper {
 		const charset = `${NUMBERS}${LETTERS}${LETTERS.toUpperCase()}`.split('')
 		const bytes = new Uint8Array(size)
 		crypto.webcrypto.getRandomValues(bytes)
-		console.log('bytes', bytes)
 		return bytes.reduce((acc, byte) => `${acc}${charset[byte & MASK]}`, '')
 	}
+
+	removeField = (fields = [], body = {}) => {
+		if (!Object.keys(body)?.length) return {}
+		const cloneFields = [...fields]
+		const filteredResponse = { ...body }
+		cloneFields.forEach((data) => {
+			if (data in body) {
+				delete filteredResponse[data]
+			}
+		})
+		return filteredResponse
+	}
+
+	ObjectId = (id) => new mongoose.Types.ObjectId(id)
 }
 
 export default new Helper()
