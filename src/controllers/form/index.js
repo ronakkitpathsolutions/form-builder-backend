@@ -90,6 +90,15 @@ class FormController {
 						foreignField: 'form_code',
 						as: 'attributes'
 					}
+				},
+				{
+					$project: {
+						'attributes.form_code': 0,
+						'attributes.created_At': 0,
+						'attributes.__v': 0,
+						created_At: 0,
+						__v: 0
+					}
 				}
 			])
 
