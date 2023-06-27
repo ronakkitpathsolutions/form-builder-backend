@@ -18,7 +18,11 @@ subUserRoute.get(
 
 subUserRoute.get(
 	'/admin/sub-users/:_id',
-	[Middleware.authentication, Middleware.bothAreAccessible],
+	[
+		Middleware.authentication,
+		Middleware.bothAreAccessible,
+		Middleware.isValidObjectId
+	],
 	SubUserController.getSubUser
 )
 
@@ -27,6 +31,7 @@ subUserRoute.patch(
 	[Middleware.authentication, Middleware.isAdmin, Middleware.isValidObjectId],
 	SubUserController.updateUser
 )
+
 subUserRoute.delete(
 	'/admin/sub-users/delete/:_id',
 	[Middleware.authentication, Middleware.isAdmin, Middleware.isValidObjectId],

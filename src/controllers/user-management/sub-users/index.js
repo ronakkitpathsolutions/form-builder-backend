@@ -178,7 +178,6 @@ class SubUserController {
 	deleteUser = async (req, res) => {
 		try {
 			const { _id } = req.params
-
 			const data = await SubUsers.findByIdAndDelete(_id)
 
 			if (!data)
