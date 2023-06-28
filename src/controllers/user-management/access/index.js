@@ -57,6 +57,29 @@ class AccessController {
 			serverError(error, res)
 		}
 	}
+
+	removeAccess = async (req, res) => {
+		try {
+			const { _id } = req.params
+			const data = await Access.findByIdAndDelete(_id)
+
+			if (!data)
+				return res.status(statusCode.notFound).json(
+					response({
+						type: types.error,
+						message: 'Not found.'
+					})
+				)
+			res.status(statusCode.success).json(
+				response({
+					type: types.success,
+					message: 'Deleted successfully.'
+				})
+			)
+		} catch (error) {
+			serverError(error, res)
+		}
+	}
 }
 
 export default new AccessController()

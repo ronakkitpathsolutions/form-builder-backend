@@ -10,4 +10,10 @@ accessRoute.post(
 	AccessController.createAccess
 )
 
+accessRoute.delete(
+	'/admin/access/delete/:_id',
+	[Middleware.authentication, Middleware.isAdmin, Middleware.isValidObjectId],
+	AccessController.removeAccess
+)
+
 export default accessRoute
