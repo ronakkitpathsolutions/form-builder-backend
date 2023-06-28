@@ -135,9 +135,11 @@ class SubUserController {
 	updateUser = async (req, res) => {
 		try {
 			const { _id } = req.params
-			const { role } = req.body
+			const { ...body } = req.body
 
-			const isAllFieldRequired = Helper.allFieldsAreRequired([role])
+			const isAllFieldRequired = Helper.allFieldsAreRequired(
+				Object.values(body)
+			)
 
 			if (isAllFieldRequired)
 				return res.status(statusCode.badRequest).json(
@@ -147,7 +149,7 @@ class SubUserController {
 					})
 				)
 
-			await SubUsers.findByIdAndUpdate(_id, { role })
+			await SubUsers.findByIdAndUpdate(_id, { ...body })
 
 			const data = await SubUsers.findById(_id).select([
 				'_id',
