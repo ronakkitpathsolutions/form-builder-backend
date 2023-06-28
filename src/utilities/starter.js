@@ -1,5 +1,5 @@
-class Extensions {
-	loadExtension = () =>
+class ServerStarter {
+	loading = () =>
 		new Promise((resolve) => {
 			Object.assign(Array.prototype, {
 				countWhen(predicate) {
@@ -9,8 +9,7 @@ class Extensions {
 
 			Object.assign(Array.prototype, {
 				random() {
-					const random = Math.floor(Math.random() * this.length)
-					return this[random]
+					return this[Math.floor(Math.random() * this.length)]
 				}
 			})
 
@@ -38,4 +37,4 @@ class Extensions {
 		})
 }
 
-export default new Extensions()
+export default new ServerStarter()

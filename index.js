@@ -3,15 +3,14 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import http from 'http'
 import bodyParser from 'body-parser'
-import loadExtensions from './src/utilities/load-extensions.js'
+import ServerStarter from './src/utilities/starter.js'
 import database from './src/db/config.js'
 import router from './src/routes/index.js'
 
 class App {
 	constructor() {
 		dotenv.config()
-		loadExtensions
-			.loadExtension()
+		ServerStarter.loading()
 			.then(() => express())
 			.then((app) => this.dbConfiguration(app))
 			.then((app) => {
