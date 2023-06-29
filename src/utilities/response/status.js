@@ -1,6 +1,6 @@
 const statusCode = {
-	success: 200,
 	created: 201,
+	success: 200,
 	redirect: 302,
 	badRequest: 400,
 	unauthorized: 401,
